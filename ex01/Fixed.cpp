@@ -2,11 +2,14 @@
 
 int Fixed::toInt(void) const
 {
-	return n + x /100;
+	int tmp = n;
+	tmp >>= x;
+	return tmp;
 }
 
 float Fixed::toFloat(void) const
 {
+	//return static_cast<float>(x) / n;
 	return (float)n / (1 << x);
 }
 
@@ -20,16 +23,15 @@ Fixed::Fixed(): n(0)
 	std::cout << "Default constructor called" << std::endl;
 }
 
-Fixed::Fixed(const int otherx)
+Fixed::Fixed(const int otherx): n(otherx << 8)
 {
 	std::cout << "Int constructor called" << std::endl;
-	this->n = otherx;
 }
 
 Fixed::Fixed(const float otherx)
 {
 	std::cout << "Float constructor called" << std::endl;
-	n = (int)(otherx * (1 << x));
+	n = roundf(otherx * (1 << x));
 }
 
 Fixed::Fixed(const Fixed &copy)
@@ -48,6 +50,13 @@ void Fixed::setRawBits ( int const raw )
 {
 	this->n = raw;
 }
+
+std::ostream& operator<<(std::ostream& out, const Fixed& Fixed)
+{
+	out << Fixed.toFloat();
+	return out;
+}
+
 
 Fixed& Fixed::operator=(const Fixed &other)
 {
