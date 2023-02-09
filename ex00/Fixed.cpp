@@ -1,3 +1,5 @@
+# include <iostream>
+
 #include "Fixed.hpp"
 
 Fixed::~Fixed()
@@ -13,7 +15,7 @@ Fixed::Fixed(): n(0)
 Fixed::Fixed(const Fixed &copy)
 {
 	 std::cout << "Copy constructor called" << std::endl;
-	 this->n = copy.getRawBits();
+	 this->n = copy.n;
 }
 
 int Fixed::getRawBits( void ) const
@@ -24,6 +26,7 @@ int Fixed::getRawBits( void ) const
 
 void Fixed::setRawBits ( int const raw )
 {
+	std::cout << "setRawBits member function called" << std::endl;
 	this->n = raw;
 }
 
